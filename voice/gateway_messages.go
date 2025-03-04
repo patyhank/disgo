@@ -7,8 +7,9 @@ import (
 
 // GatewayMessage represents a voice gateway message
 type GatewayMessage struct {
-	Op Opcode             `json:"op"`
-	D  GatewayMessageData `json:"d,omitempty"`
+	Op  Opcode             `json:"op"`
+	D   GatewayMessageData `json:"d,omitempty"`
+	Seq int                `json:"s,omitempty"`
 }
 
 // UnmarshalJSON unmarshalls the GatewayMessage from json
@@ -125,7 +126,10 @@ type GatewayMessageDataHello struct {
 
 func (GatewayMessageDataHello) voiceGatewayMessageData() {}
 
-type GatewayMessageDataHeartbeat int64
+type GatewayMessageDataHeartbeat struct {
+	T      int64 `json:"t"`
+	SeqAck int   `json:"seq_ack"`
+}
 
 func (GatewayMessageDataHeartbeat) voiceGatewayMessageData() {}
 
@@ -187,6 +191,7 @@ type GatewayMessageDataResume struct {
 	GuildID   snowflake.ID `json:"server_id"` // wtf is this?
 	SessionID string       `json:"session_id"`
 	Token     string       `json:"token"`
+	SeqAck    int          `json:"seq"`
 }
 
 func (GatewayMessageDataResume) voiceGatewayMessageData() {}
