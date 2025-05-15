@@ -76,6 +76,8 @@ type User struct {
 	System               bool                  `json:"system"`
 	PublicFlags          UserFlags             `json:"public_flags"`
 	AvatarDecorationData *AvatarDecorationData `json:"avatar_decoration_data"`
+	Clan                 *ClanData             `json:"clan"`
+	PrimaryGuild         *ClanData             `json:"primary_guild"`
 }
 
 // String returns a mention of the user
@@ -200,4 +202,11 @@ type ApplicationRoleConnectionUpdate struct {
 type AvatarDecorationData struct {
 	Asset string       `json:"asset"`
 	SkuID snowflake.ID `json:"sku_id"`
+}
+
+type ClanData struct {
+	IdentityEnabled bool         `json:"identity_enabled"`
+	IdentityGuildId snowflake.ID `json:"identity_guild_id,omitempty"`
+	Tag             string       `json:"tag"`
+	Badge           string       `json:"badge"`
 }
